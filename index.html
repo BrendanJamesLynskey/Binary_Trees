@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binary Trees</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+  :root {
+    --amber:  #f5a623;
+    --green:  #4ecb8d;
+    --purple: #a78bfa;
+    --blue:   #60a5fa;
+    --red:    #f87171;
+    --bg:     #0a0a0f;
+    --bg2:    #10101a;
+    --bg3:    #181824;
+    --border: #2a2a3a;
+    --text:   #e8e8f0;
+    --muted:  #8888a8;
+  }
+
+  .reveal-viewport { background: var(--bg); }
+  .reveal .slides section { background: transparent; }
+
+  .reveal { font-family: 'DM Sans', sans-serif; color: var(--text); }
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Playfair Display', serif; font-weight: 700; }
+  .reveal h1 { font-size: 1.6em; color: var(--amber); line-height: 1.1; }
+  .reveal h2 { font-size: 1.1em; color: var(--amber); margin-bottom: .2em; }
+  .reveal h3 { font-size: .78em; color: var(--green); margin-bottom: .15em; }
+  .reveal p  { font-size: .56em; line-height: 1.45; color: var(--text); }
+  .reveal li { font-size: .54em; line-height: 1.45; margin-bottom: .1em; }
+  .reveal code { font-family: 'JetBrains Mono', monospace; font-size: .72em; }
+  .reveal pre  { box-shadow: none; background: var(--bg3); border: 1px solid var(--border);
+                 border-radius: 6px; padding: .3em .5em; margin: .25em 0; }
+  .reveal pre code { font-size: .52em; line-height: 1.35; background: transparent; color: #cdd6f4; }
+
+  /* ── slide chrome ── */
+  .slide-hdr {
+    display: flex; align-items: center; gap: .4em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: .2em; margin-bottom: .3em;
+  }
+  .slide-hdr .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .42em; font-weight: 500;
+    color: var(--bg); background: var(--amber);
+    padding: .1em .4em; border-radius: 3px;
+    letter-spacing: .04em;
+  }
+  .slide-hdr h2 { margin: 0; font-size: .95em; }
+
+  /* ── two-column ── */
+  .cols   { display: grid; gap: .5em; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .cols-6040 { grid-template-columns: 6fr 4fr; }
+  .cols-4060 { grid-template-columns: 4fr 6fr; }
+
+  /* ── cards ── */
+  .card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 6px; padding: .35em .6em;
+  }
+  .card.amber { border-left: 3px solid var(--amber); }
+  .card.green { border-left: 3px solid var(--green); }
+  .card.purple{ border-left: 3px solid var(--purple); }
+  .card.blue  { border-left: 3px solid var(--blue); }
+  .card.red   { border-left: 3px solid var(--red); }
+  .card h3 { font-size: .64em; margin: 0 0 .12em; }
+  .card p  { font-size: .52em; margin: 0; color: #b8b8d0; }
+  .card ul { margin: 0; padding-left: 1em; }
+  .card li { font-size: .52em; color: #b8b8d0; margin-bottom: .02em; }
+
+  /* ── table ── */
+  .reveal table { width: 100%; border-collapse: collapse; font-size: .5em; }
+  .reveal table th { background: var(--bg3); color: var(--amber); font-weight: 600;
+                     padding: .2em .4em; border: 1px solid var(--border); text-align: left; }
+  .reveal table td { padding: .18em .4em; border: 1px solid var(--border); color: #ccc; }
+  .reveal table tr:nth-child(even) td { background: #0e0e18; }
+
+  /* ── accent spans ── */
+  .a  { color: var(--amber); font-weight: 600; }
+  .g  { color: var(--green); font-weight: 600; }
+  .p  { color: var(--purple); font-weight: 600; }
+  .b  { color: var(--blue); font-weight: 600; }
+  .r  { color: var(--red); font-weight: 600; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ── SVG graph diagrams ── */
+  svg.diagram { display: block; margin: 0 auto; overflow: visible; }
+
+  /* ── pill badges ── */
+  .pill {
+    display: inline-block; font-family: 'JetBrains Mono', monospace;
+    font-size: .44em; padding: .08em .4em; border-radius: 99px;
+    border: 1px solid; margin: 0 .08em;
+  }
+  .pill.amber { color: var(--amber); border-color: var(--amber); }
+  .pill.green { color: var(--green); border-color: var(--green); }
+  .pill.purple{ color: var(--purple); border-color: var(--purple); }
+  .pill.blue  { color: var(--blue); border-color: var(--blue); }
+
+  /* ── footer — hidden ── */
+  .reveal .slide-footer { display: none; }
+  /* title slide special */
+  .title-slide h1 { font-size: 1.8em; }
+  .title-slide .subtitle {
+    font-size: .7em; color: var(--green); font-family: 'DM Sans', sans-serif;
+    font-weight: 300; letter-spacing: .04em; margin: .3em 0 .6em;
+  }
+  .title-slide .meta { font-size: .48em; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+
+  /* ── super-step animator ── */
+  .ss-row {
+    display: flex; gap: .25em; align-items: center;
+    margin: .1em 0; font-size: .55em; font-family: 'JetBrains Mono', monospace;
+  }
+  .ss-node {
+    padding: .2em .55em; border-radius: 5px; font-size: .9em;
+    background: var(--bg3); border: 1px solid var(--border); color: var(--text);
+  }
+  .ss-node.active { background: #1a2a1a; border-color: var(--green); color: var(--green); }
+  .ss-node.done   { background: #1a1a2a; border-color: var(--purple); color: var(--purple); }
+  .ss-arrow { color: var(--amber); }
+  .ss-label { font-size: .8em; color: var(--muted); margin-left: .3em; }
+
+  /* reduce default margins */
+  .reveal ul, .reveal ol { margin: .15em 0 .15em 1em; }
+.reveal .slides > section { display: flex !important; flex-direction: column !important; overflow-y: auto !important; align-items: stretch !important; justify-content: flex-start !important; }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 01 — Title
+══════════════════════════════════════════════════════════════════ -->
+<section class="title-slide" data-background-color="#0a0a0f">
+  <div style="font-family:'JetBrains Mono',monospace; font-size:.5em; color:var(--muted); margin-bottom:.4em; letter-spacing:.1em;">COMPUTER SCIENCE FUNDAMENTALS SERIES</div>
+  <h1>Binary Trees</h1>
+  <div class="subtitle">
+    Traversals · Tree properties · LCA ·<br>
+    Morris traversal · Expression trees · Serialisation
+  </div>
+  <div style="width:60px; height:3px; background:var(--amber); margin-bottom:1.4em;"></div>
+  <div class="meta">
+    Mid-level software engineer track &nbsp;·&nbsp; 20 slides
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 02 — Tree Terminology
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">02</span>
+    <h2>Tree Terminology</h2>
+  </div>
+  <div class="cols cols-6040">
+    <div>
+      <table>
+        <tr><th>Term</th><th>Definition</th></tr>
+        <tr><td><span class="a">Root</span></td><td>Topmost node — has no parent</td></tr>
+        <tr><td><span class="a">Parent</span></td><td>Node directly above another in the hierarchy</td></tr>
+        <tr><td><span class="a">Child</span></td><td>Node directly below — each node may have zero or more children</td></tr>
+        <tr><td><span class="a">Leaf</span></td><td>Node with no children (external node)</td></tr>
+        <tr><td><span class="a">Internal node</span></td><td>Node with at least one child</td></tr>
+        <tr><td><span class="a">Edge</span></td><td>Link between a parent and a child</td></tr>
+        <tr><td><span class="a">Depth</span></td><td>Number of edges from root to node — root has depth 0</td></tr>
+        <tr><td><span class="a">Height</span></td><td>Longest path from node down to a leaf — leaf has height 0</td></tr>
+        <tr><td><span class="a">Level</span></td><td>Set of all nodes at the same depth</td></tr>
+        <tr><td><span class="a">Subtree</span></td><td>A node and all its descendants</td></tr>
+      </table>
+    </div>
+    <div>
+      <svg class="diagram" viewBox="0 0 240 220" width="240" height="220">
+        <!-- edges -->
+        <line x1="120" y1="20" x2="60" y2="70" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="120" y1="20" x2="180" y2="70" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="60" y1="70" x2="30" y2="130" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="60" y1="70" x2="90" y2="130" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="180" y1="70" x2="210" y2="130" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="30" y1="130" x2="15" y2="190" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="30" y1="130" x2="50" y2="190" stroke="#2a2a3a" stroke-width="2"/>
+        <!-- nodes -->
+        <circle cx="120" cy="20" r="14" fill="#10101a" stroke="#f5a623" stroke-width="2"/>
+        <text x="120" y="25" text-anchor="middle" fill="#f5a623" font-size="12" font-family="JetBrains Mono">A</text>
+        <circle cx="60" cy="70" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
+        <text x="60" y="75" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">B</text>
+        <circle cx="180" cy="70" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
+        <text x="180" y="75" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">C</text>
+        <circle cx="30" cy="130" r="14" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
+        <text x="30" y="135" text-anchor="middle" fill="#a78bfa" font-size="12" font-family="JetBrains Mono">D</text>
+        <circle cx="90" cy="130" r="14" fill="#10101a" stroke="#60a5fa" stroke-width="2"/>
+        <text x="90" y="135" text-anchor="middle" fill="#60a5fa" font-size="12" font-family="JetBrains Mono">E</text>
+        <circle cx="210" cy="130" r="14" fill="#10101a" stroke="#60a5fa" stroke-width="2"/>
+        <text x="210" y="135" text-anchor="middle" fill="#60a5fa" font-size="12" font-family="JetBrains Mono">F</text>
+        <circle cx="15" cy="190" r="14" fill="#10101a" stroke="#f87171" stroke-width="2"/>
+        <text x="15" y="195" text-anchor="middle" fill="#f87171" font-size="12" font-family="JetBrains Mono">G</text>
+        <circle cx="50" cy="190" r="14" fill="#10101a" stroke="#f87171" stroke-width="2"/>
+        <text x="50" y="195" text-anchor="middle" fill="#f87171" font-size="12" font-family="JetBrains Mono">H</text>
+        <!-- labels -->
+        <text x="145" y="14" fill="#f5a623" font-size="9" font-family="DM Sans">root</text>
+        <text x="100" y="145" fill="#60a5fa" font-size="9" font-family="DM Sans">leaf</text>
+        <text x="220" y="145" fill="#60a5fa" font-size="9" font-family="DM Sans">leaf</text>
+      </svg>
+      <p style="text-align:center; margin-top:.3em;">A tree with <code>n</code> nodes always has exactly <code>n - 1</code> edges.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 03 — Binary Tree Definition & Properties
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">03</span>
+    <h2>Binary Tree Definition &amp; Properties</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <h3>Definition</h3>
+      <p>A binary tree is a tree in which every node has <span class="a">at most two children</span>, conventionally labelled <span class="g">left</span> and <span class="g">right</span>.</p>
+      <h3>Key properties</h3>
+      <ul>
+        <li>Maximum nodes at depth <code>d</code>: <code>2<sup>d</sup></code></li>
+        <li>Maximum total nodes with height <code>h</code>: <code>2<sup>h+1</sup> - 1</code></li>
+        <li>Minimum height for <code>n</code> nodes: <code>floor(log<sub>2</sub>(n))</code></li>
+        <li>NULL pointers in tree with <code>n</code> nodes: <code>n + 1</code></li>
+        <li>Full binary tree with <code>n</code> internal nodes has <code>n + 1</code> leaves</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Node structure</h3>
+      <pre><code class="language-python">class TreeNode:
+    def __init__(self, val=0,
+                 left=None,
+                 right=None):
+        self.val   = val
+        self.left  = left
+        self.right = right</code></pre>
+      <p style="margin-top:.3em;">The recursive structure of <code>TreeNode</code> mirrors the recursive nature of every binary tree algorithm.</p>
+      <div class="card amber" style="margin-top:.3em;">
+        <h3>Why binary?</h3>
+        <p>The two-child constraint yields elegant recursive decomposition: every problem on a binary tree reduces to solving left subtree + right subtree + combining at the root.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 04 — Full & Complete Binary Trees
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">04</span>
+    <h2>Full &amp; Complete Binary Trees</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <div class="card green">
+        <h3>Full binary tree</h3>
+        <p>Every node has <strong>0 or 2</strong> children — no node has exactly one child.</p>
+        <ul>
+          <li>With <code>i</code> internal nodes: <code>i + 1</code> leaves, <code>2i + 1</code> total</li>
+          <li>With <code>L</code> leaves: <code>2L - 1</code> total nodes</li>
+        </ul>
+      </div>
+      <pre style="margin-top:.3em;"><code>        1
+       / \
+      2   3
+     / \
+    4   5</code></pre>
+    </div>
+    <div>
+      <div class="card purple">
+        <h3>Complete binary tree</h3>
+        <p>All levels filled except possibly the last, which is filled <strong>left to right</strong>.</p>
+        <ul>
+          <li>Height: <code>floor(log<sub>2</sub>(n))</code> — guarantees <code>O(log n)</code></li>
+          <li>Array storage: node <code>i</code> has children at <code>2i+1</code> and <code>2i+2</code></li>
+          <li>Binary heaps are complete binary trees</li>
+        </ul>
+      </div>
+      <pre style="margin-top:.3em;"><code>        1
+       / \
+      2   3
+     / \ /
+    4  5 6</code></pre>
+    </div>
+  </div>
+  <div class="card amber" style="margin-top:.3em;">
+    <p>Complete trees give the most compact shape for a given number of nodes — this is why heaps use them.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 05 — Perfect, Balanced & Degenerate Trees
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">05</span>
+    <h2>Perfect, Balanced &amp; Degenerate Trees</h2>
+  </div>
+  <div class="cols cols-3">
+    <div class="card green">
+      <h3>Perfect</h3>
+      <p>Every internal node has 2 children. All leaves at the same depth.</p>
+      <ul>
+        <li>Total nodes: <code>2<sup>h+1</sup> - 1</code></li>
+        <li>Leaves: <code>2<sup>h</sup></code></li>
+        <li>Both full and complete</li>
+      </ul>
+      <pre style="margin-top:.2em;"><code>      1
+     / \
+    2   3
+   / \ / \
+  4  5 6  7</code></pre>
+    </div>
+    <div class="card blue">
+      <h3>Balanced</h3>
+      <p>Height difference between left and right subtrees of every node is at most 1.</p>
+      <ul>
+        <li>Guarantees <code>O(log n)</code> height</li>
+        <li>AVL, red-black trees maintain balance via rotations</li>
+      </ul>
+      <pre style="margin-top:.2em;"><code>      4
+     / \
+    2   6
+   /   / \
+  1   5   7</code></pre>
+    </div>
+    <div class="card red">
+      <h3>Degenerate</h3>
+      <p>Every internal node has exactly <strong>one</strong> child — effectively a linked list.</p>
+      <ul>
+        <li>Height = <code>n - 1</code></li>
+        <li>All ops become <code>O(n)</code></li>
+        <li>Why self-balancing trees exist</li>
+      </ul>
+      <pre style="margin-top:.2em;"><code>  1
+   \
+    2
+     \
+      3
+       \
+        4</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 06 — Inorder Traversal
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">06</span>
+    <h2>Inorder Traversal</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <h3>Left &rarr; Root &rarr; Right</h3>
+      <p>Visit the left subtree, then the current node, then the right subtree. For a BST, inorder produces <span class="a">sorted output</span>.</p>
+      <pre><code class="language-python">def inorder(root):
+    if root is None:
+        return
+    inorder(root.left)
+    visit(root.val)
+    inorder(root.right)</code></pre>
+      <h3 style="margin-top:.3em;">Applications</h3>
+      <ul>
+        <li>Retrieve BST elements in sorted order</li>
+        <li>Expression tree evaluation (infix notation)</li>
+        <li>Validate whether a binary tree is a BST</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Example</h3>
+      <svg class="diagram" viewBox="0 0 220 180" width="220" height="180">
+        <line x1="110" y1="25" x2="55" y2="75" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="110" y1="25" x2="165" y2="75" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="55" y1="75" x2="28" y2="130" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="55" y1="75" x2="82" y2="130" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="165" y1="75" x2="138" y2="130" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="165" y1="75" x2="192" y2="130" stroke="#2a2a3a" stroke-width="2"/>
+        <circle cx="110" cy="25" r="14" fill="#10101a" stroke="#f5a623" stroke-width="2"/>
+        <text x="110" y="30" text-anchor="middle" fill="#f5a623" font-size="12" font-family="JetBrains Mono">4</text>
+        <circle cx="55" cy="75" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
+        <text x="55" y="80" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">2</text>
+        <circle cx="165" cy="75" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
+        <text x="165" y="80" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">6</text>
+        <circle cx="28" cy="130" r="14" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
+        <text x="28" y="135" text-anchor="middle" fill="#a78bfa" font-size="12" font-family="JetBrains Mono">1</text>
+        <circle cx="82" cy="130" r="14" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
+        <text x="82" y="135" text-anchor="middle" fill="#a78bfa" font-size="12" font-family="JetBrains Mono">3</text>
+        <circle cx="138" cy="130" r="14" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
+        <text x="138" y="135" text-anchor="middle" fill="#a78bfa" font-size="12" font-family="JetBrains Mono">5</text>
+        <circle cx="192" cy="130" r="14" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
+        <text x="192" y="135" text-anchor="middle" fill="#a78bfa" font-size="12" font-family="JetBrains Mono">7</text>
+      </svg>
+      <div class="card amber" style="margin-top:.2em;">
+        <p><span class="a">Inorder:</span> 1, 2, 3, 4, 5, 6, 7 &nbsp;(sorted!)</p>
+      </div>
+      <p style="margin-top:.2em;">Time: <code>O(n)</code>. Space: <code>O(h)</code> for the recursion stack.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 07 — Preorder & Postorder Traversal
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">07</span>
+    <h2>Preorder &amp; Postorder Traversal</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <div class="card green">
+        <h3>Preorder: Root &rarr; Left &rarr; Right</h3>
+      </div>
+      <pre style="margin-top:.2em;"><code class="language-python">def preorder(root):
+    if root is None:
+        return
+    visit(root.val)
+    preorder(root.left)
+    preorder(root.right)</code></pre>
+      <ul style="margin-top:.2em;">
+        <li>First element is always the root</li>
+        <li>Used to serialise / copy a tree</li>
+        <li>Preorder sequence + structure info reconstructs the tree</li>
+      </ul>
+    </div>
+    <div>
+      <div class="card purple">
+        <h3>Postorder: Left &rarr; Right &rarr; Root</h3>
+      </div>
+      <pre style="margin-top:.2em;"><code class="language-python">def postorder(root):
+    if root is None:
+        return
+    postorder(root.left)
+    postorder(root.right)
+    visit(root.val)</code></pre>
+      <ul style="margin-top:.2em;">
+        <li>Last element is always the root</li>
+        <li>Delete a tree (children before parent)</li>
+        <li>Postfix expression evaluation</li>
+        <li>Compute directory sizes (children first)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card amber" style="margin-top:.3em;">
+    <p><span class="a">Same tree:</span> &nbsp;Preorder: 4, 2, 1, 3, 6, 5, 7 &nbsp;&nbsp;|&nbsp;&nbsp; Postorder: 1, 3, 2, 5, 7, 6, 4</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 08 — Iterative Traversals
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">08</span>
+    <h2>Iterative Traversals</h2>
+  </div>
+  <p>Recursion uses <code>O(h)</code> stack space implicitly. For very deep trees, this risks stack overflow. Iterative versions use an <span class="a">explicit stack</span>.</p>
+  <div class="cols cols-2">
+    <div>
+      <h3>Iterative inorder</h3>
+      <pre><code class="language-python">def inorder_iterative(root):
+    stack, current = [], root
+    while stack or current:
+        while current:
+            stack.append(current)
+            current = current.left
+        current = stack.pop()
+        visit(current.val)
+        current = current.right</code></pre>
+    </div>
+    <div>
+      <h3>Iterative preorder</h3>
+      <pre><code class="language-python">def preorder_iterative(root):
+    if not root:
+        return
+    stack = [root]
+    while stack:
+        node = stack.pop()
+        visit(node.val)
+        if node.right:
+            stack.append(node.right)
+        if node.left:
+            stack.append(node.left)</code></pre>
+    </div>
+  </div>
+  <div class="card blue" style="margin-top:.3em;">
+    <h3>Iterative postorder</h3>
+    <p>Trickiest of the three. Two approaches: (1) use two stacks, or (2) reverse a modified preorder (Root &rarr; Right &rarr; Left) to get (Left &rarr; Right &rarr; Root). Both are <code>O(n)</code> time, <code>O(h)</code> space.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 09 — Level-Order Traversal (BFS)
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">09</span>
+    <h2>Level-Order Traversal (BFS)</h2>
+  </div>
+  <div class="cols cols-6040">
+    <div>
+      <h3>Breadth-first, level by level</h3>
+      <p>Visit all nodes at depth <code>d</code> before depth <code>d + 1</code>. Uses a <span class="a">queue</span> instead of a stack.</p>
+      <pre><code class="language-python">from collections import deque
+
+def level_order(root):
+    if not root:
+        return []
+    result, queue = [], deque([root])
+    while queue:
+        level_size = len(queue)
+        level = []
+        for _ in range(level_size):
+            node = queue.popleft()
+            level.append(node.val)
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        result.append(level)
+    return result</code></pre>
+    </div>
+    <div>
+      <h3>Example</h3>
+      <div class="ss-row"><span class="ss-node active">4</span><span class="ss-label">Level 0</span></div>
+      <div class="ss-row"><span class="ss-node active">2</span><span class="ss-node active">6</span><span class="ss-label">Level 1</span></div>
+      <div class="ss-row"><span class="ss-node active">1</span><span class="ss-node active">3</span><span class="ss-node active">5</span><span class="ss-node active">7</span><span class="ss-label">Level 2</span></div>
+      <div class="card green" style="margin-top:.4em;">
+        <p><span class="g">Output:</span> [[4], [2, 6], [1, 3, 5, 7]]</p>
+      </div>
+      <h3 style="margin-top:.4em;">Applications</h3>
+      <ul>
+        <li>Finding minimum depth of a tree</li>
+        <li>Zigzag (spiral) traversal</li>
+        <li>Connecting next pointers at same level</li>
+        <li>Serialisation with NULL markers</li>
+      </ul>
+      <p style="margin-top:.2em;">Time: <code>O(n)</code>. Space: <code>O(w)</code> where <code>w</code> is max width.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 10 — Morris Traversal
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">10</span>
+    <h2>Morris Traversal</h2>
+  </div>
+  <p><span class="a">O(1) space</span>, no stack, no recursion. Achieves <code>O(n)</code> time by temporarily modifying the tree using <span class="g">threaded pointers</span>.</p>
+  <div class="cols cols-6040">
+    <div>
+      <pre><code class="language-python">def morris_inorder(root):
+    current = root
+    while current:
+        if current.left is None:
+            visit(current.val)
+            current = current.right
+        else:
+            # Find inorder predecessor
+            pred = current.left
+            while (pred.right and
+                   pred.right != current):
+                pred = pred.right
+
+            if pred.right is None:
+                # Create thread
+                pred.right = current
+                current = current.left
+            else:
+                # Remove thread, visit
+                pred.right = None
+                visit(current.val)
+                current = current.right</code></pre>
+    </div>
+    <div>
+      <h3>How it works</h3>
+      <div class="card green" style="margin-bottom:.2em;">
+        <p><span class="g">1.</span> No left child &rarr; visit, move right</p>
+      </div>
+      <div class="card purple" style="margin-bottom:.2em;">
+        <p><span class="p">2.</span> Left child exists &rarr; find inorder predecessor (rightmost in left subtree)</p>
+      </div>
+      <div class="card blue" style="margin-bottom:.2em;">
+        <p><span class="b">3.</span> Predecessor's right is NULL &rarr; create temporary thread back to current, go left</p>
+      </div>
+      <div class="card amber">
+        <p><span class="a">4.</span> Predecessor's right points to current &rarr; thread exists, remove it, visit current, go right</p>
+      </div>
+      <p style="margin-top:.3em;">The tree is <span class="g">restored</span> to its original shape. Each edge is traversed at most twice.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 11 — Constructing Trees from Traversals
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">11</span>
+    <h2>Constructing Trees from Traversals</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <h3>Which pairs uniquely determine a tree?</h3>
+      <table>
+        <tr><th>Pair</th><th>Unique tree?</th></tr>
+        <tr><td><span class="g">Inorder + Preorder</span></td><td>Yes</td></tr>
+        <tr><td><span class="g">Inorder + Postorder</span></td><td>Yes</td></tr>
+        <tr><td><span class="g">Inorder + Level-order</span></td><td>Yes</td></tr>
+        <tr><td><span class="r">Preorder + Postorder</span></td><td>Only for full binary trees</td></tr>
+      </table>
+      <div class="card amber" style="margin-top:.3em;">
+        <p><span class="a">Inorder is essential</span> — it tells you which nodes belong to the left vs right subtree.</p>
+      </div>
+    </div>
+    <div>
+      <h3>Algorithm: inorder + preorder</h3>
+      <pre><code class="language-python">def build_tree(preorder, inorder):
+    if not inorder:
+        return None
+    root_val = preorder.pop(0)
+    root = TreeNode(root_val)
+    mid = inorder.index(root_val)
+    root.left  = build_tree(
+        preorder, inorder[:mid])
+    root.right = build_tree(
+        preorder, inorder[mid+1:])
+    return root</code></pre>
+      <h3 style="margin-top:.2em;">Optimisation</h3>
+      <p>Use a hash map for <code>O(1)</code> index lookup and a pointer into preorder instead of <code>pop(0)</code>. Reduces time from <code>O(n<sup>2</sup>)</code> to <code>O(n)</code>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 12 — Lowest Common Ancestor
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">12</span>
+    <h2>Lowest Common Ancestor</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <h3>Definition</h3>
+      <p>The LCA of two nodes <code>p</code> and <code>q</code> is the <span class="a">deepest node</span> that is an ancestor of both.</p>
+      <pre><code class="language-python">def lca(root, p, q):
+    if (root is None or
+        root == p or root == q):
+        return root
+    left  = lca(root.left, p, q)
+    right = lca(root.right, p, q)
+    if left and right:
+        return root       # split point
+    return left or right  # same side</code></pre>
+      <h3 style="margin-top:.2em;">Complexity</h3>
+      <p>Time: <code>O(n)</code>. Space: <code>O(h)</code> recursion stack.</p>
+    </div>
+    <div>
+      <h3>How it works</h3>
+      <div class="card green" style="margin-bottom:.2em;">
+        <p>If the current node is <code>p</code> or <code>q</code>, return it upward.</p>
+      </div>
+      <div class="card purple" style="margin-bottom:.2em;">
+        <p>Recurse left and right. If <span class="p">both sides</span> return non-NULL, current node is the LCA — <code>p</code> and <code>q</code> are in different subtrees.</p>
+      </div>
+      <div class="card blue" style="margin-bottom:.2em;">
+        <p>If only <span class="b">one side</span> returns non-NULL, the LCA is deeper in that subtree.</p>
+      </div>
+      <div class="card amber">
+        <h3>BST optimisation</h3>
+        <p>If both values &lt; root, go left. If both &gt; root, go right. Otherwise root is the LCA. Time: <code>O(h)</code>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 13 — Diameter of a Binary Tree
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">13</span>
+    <h2>Diameter of a Binary Tree</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <h3>Definition</h3>
+      <p>The diameter is the <span class="a">longest path between any two nodes</span>, measured in edges. The path may or may not pass through the root.</p>
+      <pre><code class="language-python">def diameter(root):
+    max_d = 0
+
+    def height(node):
+        nonlocal max_d
+        if node is None:
+            return -1
+        lh = height(node.left)
+        rh = height(node.right)
+        max_d = max(max_d, lh + rh + 2)
+        return max(lh, rh) + 1
+
+    height(root)
+    return max_d</code></pre>
+    </div>
+    <div>
+      <h3>Key insight</h3>
+      <p>At each node, the longest path through that node is <code>left_height + right_height + 2</code>. The diameter is the maximum across all nodes.</p>
+      <svg class="diagram" viewBox="0 0 220 160" width="220" height="160">
+        <line x1="110" y1="20" x2="55" y2="65" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="110" y1="20" x2="165" y2="65" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="55" y1="65" x2="28" y2="115" stroke="#f5a623" stroke-width="2.5"/>
+        <line x1="55" y1="65" x2="82" y2="115" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="165" y1="65" x2="192" y2="115" stroke="#f5a623" stroke-width="2.5"/>
+        <line x1="110" y1="20" x2="55" y2="65" stroke="#f5a623" stroke-width="2.5"/>
+        <line x1="110" y1="20" x2="165" y2="65" stroke="#f5a623" stroke-width="2.5"/>
+        <circle cx="110" cy="20" r="13" fill="#10101a" stroke="#f5a623" stroke-width="2"/>
+        <text x="110" y="25" text-anchor="middle" fill="#f5a623" font-size="11" font-family="JetBrains Mono">4</text>
+        <circle cx="55" cy="65" r="13" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
+        <text x="55" y="70" text-anchor="middle" fill="#4ecb8d" font-size="11" font-family="JetBrains Mono">2</text>
+        <circle cx="165" cy="65" r="13" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
+        <text x="165" y="70" text-anchor="middle" fill="#4ecb8d" font-size="11" font-family="JetBrains Mono">6</text>
+        <circle cx="28" cy="115" r="13" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
+        <text x="28" y="120" text-anchor="middle" fill="#a78bfa" font-size="11" font-family="JetBrains Mono">1</text>
+        <circle cx="82" cy="115" r="13" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
+        <text x="82" y="120" text-anchor="middle" fill="#a78bfa" font-size="11" font-family="JetBrains Mono">3</text>
+        <circle cx="192" cy="115" r="13" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
+        <text x="192" y="120" text-anchor="middle" fill="#a78bfa" font-size="11" font-family="JetBrains Mono">7</text>
+        <text x="110" y="152" text-anchor="middle" fill="#f5a623" font-size="10" font-family="DM Sans">Diameter = 4 (path: 1→2→4→6→7)</text>
+      </svg>
+      <div class="card green" style="margin-top:.2em;">
+        <h3>Post-order accumulation pattern</h3>
+        <p>Compute a local answer at each node while returning info upward. This single-pass DFS pattern applies to many tree problems.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 14 — Serialisation & Deserialisation
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">14</span>
+    <h2>Serialisation &amp; Deserialisation</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <h3>Preorder with NULL markers</h3>
+      <pre><code class="language-python">def serialise(root):
+    if root is None:
+        return "# "
+    return (str(root.val) + " "
+            + serialise(root.left)
+            + serialise(root.right))
+
+def deserialise(data):
+    tokens = iter(data.split())
+    def build():
+        val = next(tokens)
+        if val == "#":
+            return None
+        node = TreeNode(int(val))
+        node.left  = build()
+        node.right = build()
+        return node
+    return build()</code></pre>
+    </div>
+    <div>
+      <h3>Example</h3>
+      <pre><code>    1
+   / \
+  2   3
+     / \
+    4   5
+
+Serialised: "1 2 # # 3 4 # # 5 # #"</code></pre>
+      <h3 style="margin-top:.3em;">Alternative approaches</h3>
+      <table>
+        <tr><th>Method</th><th>Notes</th></tr>
+        <tr><td><span class="g">Level-order</span></td><td>NULL markers per level; used by LeetCode</td></tr>
+        <tr><td><span class="p">Inorder + preorder</span></td><td>No NULLs needed but two sequences</td></tr>
+        <tr><td><span class="b">Parenthesised</span></td><td><code>1(2)(3(4)(5))</code> — human readable</td></tr>
+      </table>
+      <div class="card amber" style="margin-top:.2em;">
+        <p>Serialisation is <code>O(n)</code> time and space regardless of approach. Essential for distributed systems, caching, and persistence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 15 — Threaded Binary Trees
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">15</span>
+    <h2>Threaded Binary Trees</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <h3>The NULL pointer problem</h3>
+      <p>In a binary tree with <code>n</code> nodes, there are <span class="a">n + 1 NULL pointers</span> (wasted space). Threaded binary trees repurpose these NULLs to point to inorder predecessors/successors.</p>
+      <table>
+        <tr><th>Type</th><th>Description</th></tr>
+        <tr><td><span class="g">Single-threaded</span></td><td>Right NULLs &rarr; inorder successor</td></tr>
+        <tr><td><span class="p">Double-threaded</span></td><td>Left NULLs &rarr; predecessor, right NULLs &rarr; successor</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Node structure</h3>
+      <pre><code class="language-python">class ThreadedNode:
+    def __init__(self, val):
+        self.val = val
+        self.left  = None
+        self.right = None
+        self.left_thread  = False
+        self.right_thread = False</code></pre>
+      <h3 style="margin-top:.2em;">Benefits</h3>
+      <ul>
+        <li>Inorder traversal without stack/recursion — <code>O(1)</code> space</li>
+        <li>Inorder successor/predecessor in <code>O(1)</code> amortised</li>
+        <li>Morris traversal creates temporary threads on the fly</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card blue" style="margin-top:.3em;">
+    <p>Threaded trees trade insertion/deletion complexity for traversal efficiency. Rarely used in practice but conceptually important — they inspired Morris traversal.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 16 — Expression Trees
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">16</span>
+    <h2>Expression Trees</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <h3>Definition</h3>
+      <p>A binary tree representing an arithmetic expression. <span class="g">Leaves</span> are operands, <span class="a">internal nodes</span> are operators.</p>
+      <svg class="diagram" viewBox="0 0 200 160" width="200" height="160">
+        <line x1="100" y1="20" x2="50" y2="65" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="100" y1="20" x2="150" y2="65" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="50" y1="65" x2="25" y2="115" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="50" y1="65" x2="75" y2="115" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="150" y1="65" x2="125" y2="115" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="150" y1="65" x2="175" y2="115" stroke="#2a2a3a" stroke-width="2"/>
+        <circle cx="100" cy="20" r="14" fill="#10101a" stroke="#f5a623" stroke-width="2"/>
+        <text x="100" y="25" text-anchor="middle" fill="#f5a623" font-size="13" font-family="JetBrains Mono">*</text>
+        <circle cx="50" cy="65" r="14" fill="#10101a" stroke="#f5a623" stroke-width="2"/>
+        <text x="50" y="70" text-anchor="middle" fill="#f5a623" font-size="13" font-family="JetBrains Mono">+</text>
+        <circle cx="150" cy="65" r="14" fill="#10101a" stroke="#f5a623" stroke-width="2"/>
+        <text x="150" y="70" text-anchor="middle" fill="#f5a623" font-size="13" font-family="JetBrains Mono">-</text>
+        <circle cx="25" cy="115" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
+        <text x="25" y="120" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">3</text>
+        <circle cx="75" cy="115" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
+        <text x="75" y="120" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">4</text>
+        <circle cx="125" cy="115" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
+        <text x="125" y="120" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">5</text>
+        <circle cx="175" cy="115" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
+        <text x="175" y="120" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">2</text>
+        <text x="100" y="152" text-anchor="middle" fill="#8888a8" font-size="10" font-family="DM Sans">(3 + 4) * (5 - 2) = 21</text>
+      </svg>
+    </div>
+    <div>
+      <h3>Traversals produce different notations</h3>
+      <table>
+        <tr><th>Traversal</th><th>Notation</th><th>Output</th></tr>
+        <tr><td>Inorder</td><td>Infix</td><td><code>3+4*5-2</code> (needs parens)</td></tr>
+        <tr><td>Preorder</td><td>Prefix (Polish)</td><td><code>* + 3 4 - 5 2</code></td></tr>
+        <tr><td>Postorder</td><td>Postfix (RPN)</td><td><code>3 4 + 5 2 - *</code></td></tr>
+      </table>
+      <h3 style="margin-top:.3em;">Building from postfix</h3>
+      <pre><code class="language-python">def build_expr_tree(postfix):
+    stack = []
+    ops = {'+', '-', '*', '/'}
+    for token in postfix:
+        node = TreeNode(token)
+        if token in ops:
+            node.right = stack.pop()
+            node.left  = stack.pop()
+        stack.append(node)
+    return stack[0]</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 17 — Applications — File Systems
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">17</span>
+    <h2>Applications — File Systems</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <h3>Directory trees</h3>
+      <p>File systems are naturally tree-structured. Each directory is an internal node; files are leaves.</p>
+      <pre><code>/
+├── home/
+│   ├── alice/
+│   │   ├── docs/
+│   │   │   └── report.pdf
+│   │   └── .bashrc
+│   └── bob/
+│       └── code/
+│           └── main.py
+├── etc/
+│   └── config.yaml
+└── var/
+    └── log/
+        └── syslog</code></pre>
+    </div>
+    <div>
+      <h3>Tree operations in file systems</h3>
+      <table>
+        <tr><th>Operation</th><th>Tree algorithm</th></tr>
+        <tr><td><code>ls -R</code></td><td>Preorder DFS</td></tr>
+        <tr><td><code>du -s</code></td><td>Postorder DFS — children before parent</td></tr>
+        <tr><td><code>find</code></td><td>BFS or DFS</td></tr>
+        <tr><td><code>rm -rf</code></td><td>Postorder — delete children first</td></tr>
+        <tr><td>Path resolution</td><td>Root-to-leaf traversal</td></tr>
+      </table>
+      <div class="card green" style="margin-top:.3em;">
+        <p>Every <code>cd</code>, <code>ls</code>, and <code>mkdir</code> is a tree operation. Understanding tree traversals helps you reason about file system performance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 18 — Applications — DOM & Decision Trees
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">18</span>
+    <h2>Applications — DOM &amp; Decision Trees</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <div class="card green">
+        <h3>The DOM (Document Object Model)</h3>
+        <p>Every web page is a tree. The browser parses HTML into a tree of nodes.</p>
+      </div>
+      <pre style="margin-top:.2em;"><code>document
+└── html
+    ├── head
+    │   ├── title
+    │   └── link
+    └── body
+        ├── div#header
+        │   └── h1
+        └── div#content
+            ├── p
+            └── ul
+                ├── li
+                └── li</code></pre>
+      <ul style="margin-top:.2em;">
+        <li>CSS selectors traverse the tree</li>
+        <li><code>getElementById()</code> is a tree search</li>
+        <li>DOM diffing (React, Vue) compares two trees</li>
+      </ul>
+    </div>
+    <div>
+      <div class="card purple">
+        <h3>Decision trees</h3>
+        <p>Each internal node is a yes/no question. Each leaf is a classification.</p>
+      </div>
+      <pre style="margin-top:.2em;"><code>          Is temp > 30?
+         /             \
+       Yes              No
+    Is humid?       Is windy?
+     /    \          /     \
+   Yes    No      Yes      No
+  Stay  Beach    Stay     Park
+ inside          inside</code></pre>
+      <ul style="margin-top:.2em;">
+        <li>Each root-to-leaf path is a decision rule</li>
+        <li>Training: split data to maximise information gain</li>
+        <li>Random forests: ensemble of many decision trees</li>
+        <li>Used in medicine, finance, recommendations</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 19 — Complexity Cheat Sheet
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">19</span>
+    <h2>Complexity Cheat Sheet</h2>
+  </div>
+  <h3>Time complexity for common operations</h3>
+  <table>
+    <tr><th>Operation</th><th>Average</th><th>Worst (unbalanced)</th><th>Balanced</th></tr>
+    <tr><td>Search</td><td><code>O(log n)</code></td><td><code>O(n)</code></td><td><code>O(log n)</code></td></tr>
+    <tr><td>Insert</td><td><code>O(log n)</code></td><td><code>O(n)</code></td><td><code>O(log n)</code></td></tr>
+    <tr><td>Delete</td><td><code>O(log n)</code></td><td><code>O(n)</code></td><td><code>O(log n)</code></td></tr>
+    <tr><td>Traversal (any)</td><td><code>O(n)</code></td><td><code>O(n)</code></td><td><code>O(n)</code></td></tr>
+    <tr><td>Find min/max</td><td><code>O(log n)</code></td><td><code>O(n)</code></td><td><code>O(log n)</code></td></tr>
+    <tr><td>LCA</td><td><code>O(n)</code></td><td><code>O(n)</code></td><td><code>O(log n)</code> with parent ptrs</td></tr>
+  </table>
+  <h3 style="margin-top:.3em;">Space complexity of traversals</h3>
+  <div class="cols cols-2" style="margin-top:.15em;">
+    <div>
+      <table>
+        <tr><th>Method</th><th>Space</th></tr>
+        <tr><td>Recursive DFS</td><td><code>O(h)</code> — recursion stack</td></tr>
+        <tr><td>Iterative DFS</td><td><code>O(h)</code> — explicit stack</td></tr>
+        <tr><td>BFS (level-order)</td><td><code>O(w)</code> — queue width, up to <code>O(n)</code></td></tr>
+        <tr><td>Morris traversal</td><td><span class="g">O(1)</span> — no extra space</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="card amber">
+        <h3>Interview tip</h3>
+        <p>Always state whether the tree is balanced. It changes the answer from <code>O(n)</code> to <code>O(log n)</code> for most operations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+  SLIDE 20 — Summary & Further Reading
+══════════════════════════════════════════════════════════════════ -->
+<section data-background-color="#0a0a0f">
+  <div class="slide-hdr">
+    <span class="tag">20</span>
+    <h2>Summary &amp; Further Reading</h2>
+  </div>
+  <div class="cols cols-2">
+    <div>
+      <h3>Key takeaways</h3>
+      <ul>
+        <li>A binary tree is defined by the constraint of at most two children per node</li>
+        <li>Tree shape matters: <span class="g">balanced</span> gives <code>O(log n)</code>, <span class="r">degenerate</span> gives <code>O(n)</code></li>
+        <li>Master all three DFS traversals in both recursive and iterative forms</li>
+        <li>Level-order (BFS) solves level-aware problems naturally</li>
+        <li>Morris traversal achieves <code>O(1)</code> space via temporary threads</li>
+        <li>LCA and diameter are canonical post-order accumulation problems</li>
+        <li>Serialisation converts structure to string and back — essential for distributed systems</li>
+        <li>Expression trees connect traversals to notation systems</li>
+        <li>Trees are everywhere: file systems, DOM, decision trees, compiler ASTs, database indexes</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Recommended reading</h3>
+      <table>
+        <tr><th>Source</th><th>Description</th></tr>
+        <tr><td><span class="a">CLRS</span></td><td><em>Introduction to Algorithms</em> — Ch. 12 (BSTs), Ch. 13 (Red-Black Trees)</td></tr>
+        <tr><td><span class="a">Skiena</span></td><td><em>The Algorithm Design Manual</em> — tree traversal and applications</td></tr>
+        <tr><td><span class="a">LeetCode</span></td><td>Tree tag — 200+ problems, easy to hard</td></tr>
+        <tr><td><span class="a">Knuth</span></td><td><em>TAOCP Vol. 1</em> — fundamental tree algorithms, threaded trees</td></tr>
+        <tr><td><span class="a">Sedgewick</span></td><td><em>Algorithms</em> — BSTs, balanced trees, applications</td></tr>
+      </table>
+      <div style="margin-top:.4em;">
+        <p>
+        <span class="pill amber">Inorder</span>
+        <span class="pill green">Preorder</span>
+        <span class="pill purple">Postorder</span>
+        <span class="pill amber">BFS</span>
+        <span class="pill green">Morris</span>
+        <span class="pill purple">LCA</span>
+        <span class="pill amber">Serialise</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /slides -->
+</div><!-- /reveal -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/plugin/highlight/highlight.min.js"></script>
+<script>
+Reveal.initialize({
+  hash: true,
+  slideNumber: 'c/t',
+  transition: 'fade',
+  transitionSpeed: 'fast',
+  controls: true,
+  progress: true,
+  center: false,
+  width: 1100,
+  height: 900,
+  margin: 0.01,
+  plugins: [RevealHighlight],
+  highlight: { theme: 'monokai' }
+});
+</script>
+<script>
+(function(){
+  var h = Reveal.getConfig().height || 900;
+  var m = Reveal.getConfig().margin || 0.02;
+  var maxH = Math.floor(h * (1 - 2 * m)) + 'px';
+  function fixSlides(){
+    document.querySelectorAll('.reveal .slides>section,.reveal .slides>section>section').forEach(function(s){
+      s.style.display = 'block';
+      s.style.maxHeight = maxH;
+    });
+  }
+  Reveal.on('ready', fixSlides);
+  Reveal.on('slidechanged', fixSlides);
+})();
+</script>
+</body>
+</html>
