@@ -6,7 +6,7 @@
   <title>Binary Trees</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/white.min.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,17 +14,17 @@
 
   <style>
   :root {
-    --amber:  #f5a623;
-    --green:  #4ecb8d;
-    --purple: #a78bfa;
-    --blue:   #60a5fa;
-    --red:    #f87171;
-    --bg:     #0a0a0f;
-    --bg2:    #10101a;
-    --bg3:    #181824;
-    --border: #2a2a3a;
-    --text:   #e8e8f0;
-    --muted:  #8888a8;
+    --amber:  #bf7d10;
+    --green:  #1c815a;
+    --purple: #6435bc;
+    --blue:   #2b3dc5;
+    --red:    #db3a30;
+    --bg:     #fafaf8;
+    --bg2:    #f1f1ee;
+    --bg3:    #eaeae6;
+    --border: #d1d1cb;
+    --text:   #161616;
+    --muted:  #6a6a63;
   }
 
   .reveal-viewport { background: var(--bg); }
@@ -40,7 +40,7 @@
   .reveal code { font-family: 'JetBrains Mono', monospace; font-size: .72em; }
   .reveal pre  { box-shadow: none; background: var(--bg3); border: 1px solid var(--border);
                  border-radius: 6px; padding: .3em .5em; margin: .25em 0; }
-  .reveal pre code { font-size: .52em; line-height: 1.35; background: transparent; color: #cdd6f4; }
+  .reveal pre code { font-size: .52em; line-height: 1.35; background: transparent; color: #242422; }
 
   /* ── slide chrome ── */
   .slide-hdr {
@@ -75,16 +75,16 @@
   .card.blue  { border-left: 3px solid var(--blue); }
   .card.red   { border-left: 3px solid var(--red); }
   .card h3 { font-size: .64em; margin: 0 0 .12em; }
-  .card p  { font-size: .52em; margin: 0; color: #b8b8d0; }
+  .card p  { font-size: .52em; margin: 0; color: #3d3d39; }
   .card ul { margin: 0; padding-left: 1em; }
-  .card li { font-size: .52em; color: #b8b8d0; margin-bottom: .02em; }
+  .card li { font-size: .52em; color: #3d3d39; margin-bottom: .02em; }
 
   /* ── table ── */
   .reveal table { width: 100%; border-collapse: collapse; font-size: .5em; }
   .reveal table th { background: var(--bg3); color: var(--amber); font-weight: 600;
                      padding: .2em .4em; border: 1px solid var(--border); text-align: left; }
-  .reveal table td { padding: .18em .4em; border: 1px solid var(--border); color: #ccc; }
-  .reveal table tr:nth-child(even) td { background: #0e0e18; }
+  .reveal table td { padding: .18em .4em; border: 1px solid var(--border); color: #2d2d2b; }
+  .reveal table tr:nth-child(even) td { background: #f3f3f1; }
 
   /* ── accent spans ── */
   .a  { color: var(--amber); font-weight: 600; }
@@ -127,8 +127,8 @@
     padding: .2em .55em; border-radius: 5px; font-size: .9em;
     background: var(--bg3); border: 1px solid var(--border); color: var(--text);
   }
-  .ss-node.active { background: #1a2a1a; border-color: var(--green); color: var(--green); }
-  .ss-node.done   { background: #1a1a2a; border-color: var(--purple); color: var(--purple); }
+  .ss-node.active { background: #d3e1d5; border-color: var(--green); color: var(--green); }
+  .ss-node.done   { background: #e6e6e2; border-color: var(--purple); color: var(--purple); }
   .ss-arrow { color: var(--amber); }
   .ss-label { font-size: .8em; color: var(--muted); margin-left: .3em; }
 
@@ -136,6 +136,7 @@
   .reveal ul, .reveal ol { margin: .15em 0 .15em 1em; }
 .reveal .slides > section { display: flex !important; flex-direction: column !important; overflow-y: auto !important; align-items: stretch !important; justify-content: flex-start !important; }
 </style>
+<style>.reveal .slide-number{background-color:transparent}</style>
 </head>
 <body>
 <div class="reveal">
@@ -144,7 +145,7 @@
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 01 — Title
 ══════════════════════════════════════════════════════════════════ -->
-<section class="title-slide" data-background-color="#0a0a0f">
+<section class="title-slide" data-background-color="#fafaf8">
   <div style="font-family:'JetBrains Mono',monospace; font-size:.5em; color:var(--muted); margin-bottom:.4em; letter-spacing:.1em;">COMPUTER SCIENCE FUNDAMENTALS SERIES</div>
   <h1>Binary Trees</h1>
   <div class="subtitle">
@@ -160,7 +161,7 @@
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 02 — Tree Terminology
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">02</span>
     <h2>Tree Terminology</h2>
@@ -184,34 +185,34 @@
     <div>
       <svg class="diagram" viewBox="0 0 240 220" width="240" height="220">
         <!-- edges -->
-        <line x1="120" y1="20" x2="60" y2="70" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="120" y1="20" x2="180" y2="70" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="60" y1="70" x2="30" y2="130" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="60" y1="70" x2="90" y2="130" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="180" y1="70" x2="210" y2="130" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="30" y1="130" x2="15" y2="190" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="30" y1="130" x2="50" y2="190" stroke="#2a2a3a" stroke-width="2"/>
+        <line x1="120" y1="20" x2="60" y2="70" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="120" y1="20" x2="180" y2="70" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="60" y1="70" x2="30" y2="130" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="60" y1="70" x2="90" y2="130" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="180" y1="70" x2="210" y2="130" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="30" y1="130" x2="15" y2="190" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="30" y1="130" x2="50" y2="190" stroke="#d1d1cb" stroke-width="2"/>
         <!-- nodes -->
-        <circle cx="120" cy="20" r="14" fill="#10101a" stroke="#f5a623" stroke-width="2"/>
-        <text x="120" y="25" text-anchor="middle" fill="#f5a623" font-size="12" font-family="JetBrains Mono">A</text>
-        <circle cx="60" cy="70" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
-        <text x="60" y="75" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">B</text>
-        <circle cx="180" cy="70" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
-        <text x="180" y="75" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">C</text>
-        <circle cx="30" cy="130" r="14" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
-        <text x="30" y="135" text-anchor="middle" fill="#a78bfa" font-size="12" font-family="JetBrains Mono">D</text>
-        <circle cx="90" cy="130" r="14" fill="#10101a" stroke="#60a5fa" stroke-width="2"/>
-        <text x="90" y="135" text-anchor="middle" fill="#60a5fa" font-size="12" font-family="JetBrains Mono">E</text>
-        <circle cx="210" cy="130" r="14" fill="#10101a" stroke="#60a5fa" stroke-width="2"/>
-        <text x="210" y="135" text-anchor="middle" fill="#60a5fa" font-size="12" font-family="JetBrains Mono">F</text>
-        <circle cx="15" cy="190" r="14" fill="#10101a" stroke="#f87171" stroke-width="2"/>
-        <text x="15" y="195" text-anchor="middle" fill="#f87171" font-size="12" font-family="JetBrains Mono">G</text>
-        <circle cx="50" cy="190" r="14" fill="#10101a" stroke="#f87171" stroke-width="2"/>
-        <text x="50" y="195" text-anchor="middle" fill="#f87171" font-size="12" font-family="JetBrains Mono">H</text>
+        <circle cx="120" cy="20" r="14" fill="#f1f1ee" stroke="#bf7d10" stroke-width="2"/>
+        <text x="120" y="25" text-anchor="middle" fill="#bf7d10" font-size="12" font-family="JetBrains Mono">A</text>
+        <circle cx="60" cy="70" r="14" fill="#f1f1ee" stroke="#1c815a" stroke-width="2"/>
+        <text x="60" y="75" text-anchor="middle" fill="#1c815a" font-size="12" font-family="JetBrains Mono">B</text>
+        <circle cx="180" cy="70" r="14" fill="#f1f1ee" stroke="#1c815a" stroke-width="2"/>
+        <text x="180" y="75" text-anchor="middle" fill="#1c815a" font-size="12" font-family="JetBrains Mono">C</text>
+        <circle cx="30" cy="130" r="14" fill="#f1f1ee" stroke="#6435bc" stroke-width="2"/>
+        <text x="30" y="135" text-anchor="middle" fill="#6435bc" font-size="12" font-family="JetBrains Mono">D</text>
+        <circle cx="90" cy="130" r="14" fill="#f1f1ee" stroke="#2b3dc5" stroke-width="2"/>
+        <text x="90" y="135" text-anchor="middle" fill="#2b3dc5" font-size="12" font-family="JetBrains Mono">E</text>
+        <circle cx="210" cy="130" r="14" fill="#f1f1ee" stroke="#2b3dc5" stroke-width="2"/>
+        <text x="210" y="135" text-anchor="middle" fill="#2b3dc5" font-size="12" font-family="JetBrains Mono">F</text>
+        <circle cx="15" cy="190" r="14" fill="#f1f1ee" stroke="#db3a30" stroke-width="2"/>
+        <text x="15" y="195" text-anchor="middle" fill="#db3a30" font-size="12" font-family="JetBrains Mono">G</text>
+        <circle cx="50" cy="190" r="14" fill="#f1f1ee" stroke="#db3a30" stroke-width="2"/>
+        <text x="50" y="195" text-anchor="middle" fill="#db3a30" font-size="12" font-family="JetBrains Mono">H</text>
         <!-- labels -->
-        <text x="145" y="14" fill="#f5a623" font-size="9" font-family="DM Sans">root</text>
-        <text x="100" y="145" fill="#60a5fa" font-size="9" font-family="DM Sans">leaf</text>
-        <text x="220" y="145" fill="#60a5fa" font-size="9" font-family="DM Sans">leaf</text>
+        <text x="145" y="14" fill="#bf7d10" font-size="9" font-family="DM Sans">root</text>
+        <text x="100" y="145" fill="#2b3dc5" font-size="9" font-family="DM Sans">leaf</text>
+        <text x="220" y="145" fill="#2b3dc5" font-size="9" font-family="DM Sans">leaf</text>
       </svg>
       <p style="text-align:center; margin-top:.3em;">A tree with <code>n</code> nodes always has exactly <code>n - 1</code> edges.</p>
     </div>
@@ -221,7 +222,7 @@
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 03 — Binary Tree Definition & Properties
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">03</span>
     <h2>Binary Tree Definition &amp; Properties</h2>
@@ -260,7 +261,7 @@
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 04 — Full & Complete Binary Trees
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">04</span>
     <h2>Full &amp; Complete Binary Trees</h2>
@@ -306,7 +307,7 @@
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 05 — Perfect, Balanced & Degenerate Trees
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">05</span>
     <h2>Perfect, Balanced &amp; Degenerate Trees</h2>
@@ -361,7 +362,7 @@
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 06 — Inorder Traversal
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">06</span>
     <h2>Inorder Traversal</h2>
@@ -386,26 +387,26 @@
     <div>
       <h3>Example</h3>
       <svg class="diagram" viewBox="0 0 220 180" width="220" height="180">
-        <line x1="110" y1="25" x2="55" y2="75" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="110" y1="25" x2="165" y2="75" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="55" y1="75" x2="28" y2="130" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="55" y1="75" x2="82" y2="130" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="165" y1="75" x2="138" y2="130" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="165" y1="75" x2="192" y2="130" stroke="#2a2a3a" stroke-width="2"/>
-        <circle cx="110" cy="25" r="14" fill="#10101a" stroke="#f5a623" stroke-width="2"/>
-        <text x="110" y="30" text-anchor="middle" fill="#f5a623" font-size="12" font-family="JetBrains Mono">4</text>
-        <circle cx="55" cy="75" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
-        <text x="55" y="80" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">2</text>
-        <circle cx="165" cy="75" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
-        <text x="165" y="80" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">6</text>
-        <circle cx="28" cy="130" r="14" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
-        <text x="28" y="135" text-anchor="middle" fill="#a78bfa" font-size="12" font-family="JetBrains Mono">1</text>
-        <circle cx="82" cy="130" r="14" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
-        <text x="82" y="135" text-anchor="middle" fill="#a78bfa" font-size="12" font-family="JetBrains Mono">3</text>
-        <circle cx="138" cy="130" r="14" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
-        <text x="138" y="135" text-anchor="middle" fill="#a78bfa" font-size="12" font-family="JetBrains Mono">5</text>
-        <circle cx="192" cy="130" r="14" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
-        <text x="192" y="135" text-anchor="middle" fill="#a78bfa" font-size="12" font-family="JetBrains Mono">7</text>
+        <line x1="110" y1="25" x2="55" y2="75" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="110" y1="25" x2="165" y2="75" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="55" y1="75" x2="28" y2="130" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="55" y1="75" x2="82" y2="130" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="165" y1="75" x2="138" y2="130" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="165" y1="75" x2="192" y2="130" stroke="#d1d1cb" stroke-width="2"/>
+        <circle cx="110" cy="25" r="14" fill="#f1f1ee" stroke="#bf7d10" stroke-width="2"/>
+        <text x="110" y="30" text-anchor="middle" fill="#bf7d10" font-size="12" font-family="JetBrains Mono">4</text>
+        <circle cx="55" cy="75" r="14" fill="#f1f1ee" stroke="#1c815a" stroke-width="2"/>
+        <text x="55" y="80" text-anchor="middle" fill="#1c815a" font-size="12" font-family="JetBrains Mono">2</text>
+        <circle cx="165" cy="75" r="14" fill="#f1f1ee" stroke="#1c815a" stroke-width="2"/>
+        <text x="165" y="80" text-anchor="middle" fill="#1c815a" font-size="12" font-family="JetBrains Mono">6</text>
+        <circle cx="28" cy="130" r="14" fill="#f1f1ee" stroke="#6435bc" stroke-width="2"/>
+        <text x="28" y="135" text-anchor="middle" fill="#6435bc" font-size="12" font-family="JetBrains Mono">1</text>
+        <circle cx="82" cy="130" r="14" fill="#f1f1ee" stroke="#6435bc" stroke-width="2"/>
+        <text x="82" y="135" text-anchor="middle" fill="#6435bc" font-size="12" font-family="JetBrains Mono">3</text>
+        <circle cx="138" cy="130" r="14" fill="#f1f1ee" stroke="#6435bc" stroke-width="2"/>
+        <text x="138" y="135" text-anchor="middle" fill="#6435bc" font-size="12" font-family="JetBrains Mono">5</text>
+        <circle cx="192" cy="130" r="14" fill="#f1f1ee" stroke="#6435bc" stroke-width="2"/>
+        <text x="192" y="135" text-anchor="middle" fill="#6435bc" font-size="12" font-family="JetBrains Mono">7</text>
       </svg>
       <div class="card amber" style="margin-top:.2em;">
         <p><span class="a">Inorder:</span> 1, 2, 3, 4, 5, 6, 7 &nbsp;(sorted!)</p>
@@ -418,7 +419,7 @@
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 07 — Preorder & Postorder Traversal
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">07</span>
     <h2>Preorder &amp; Postorder Traversal</h2>
@@ -466,7 +467,7 @@
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 08 — Iterative Traversals
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">08</span>
     <h2>Iterative Traversals</h2>
@@ -509,7 +510,7 @@
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 09 — Level-Order Traversal (BFS)
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">09</span>
     <h2>Level-Order Traversal (BFS)</h2>
@@ -560,7 +561,7 @@ def level_order(root):
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 10 — Morris Traversal
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">10</span>
     <h2>Morris Traversal</h2>
@@ -613,7 +614,7 @@ def level_order(root):
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 11 — Constructing Trees from Traversals
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">11</span>
     <h2>Constructing Trees from Traversals</h2>
@@ -654,7 +655,7 @@ def level_order(root):
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 12 — Lowest Common Ancestor
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">12</span>
     <h2>Lowest Common Ancestor</h2>
@@ -697,7 +698,7 @@ def level_order(root):
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 13 — Diameter of a Binary Tree
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">13</span>
     <h2>Diameter of a Binary Tree</h2>
@@ -725,26 +726,26 @@ def level_order(root):
       <h3>Key insight</h3>
       <p>At each node, the longest path through that node is <code>left_height + right_height + 2</code>. The diameter is the maximum across all nodes.</p>
       <svg class="diagram" viewBox="0 0 220 160" width="220" height="160">
-        <line x1="110" y1="20" x2="55" y2="65" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="110" y1="20" x2="165" y2="65" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="55" y1="65" x2="28" y2="115" stroke="#f5a623" stroke-width="2.5"/>
-        <line x1="55" y1="65" x2="82" y2="115" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="165" y1="65" x2="192" y2="115" stroke="#f5a623" stroke-width="2.5"/>
-        <line x1="110" y1="20" x2="55" y2="65" stroke="#f5a623" stroke-width="2.5"/>
-        <line x1="110" y1="20" x2="165" y2="65" stroke="#f5a623" stroke-width="2.5"/>
-        <circle cx="110" cy="20" r="13" fill="#10101a" stroke="#f5a623" stroke-width="2"/>
-        <text x="110" y="25" text-anchor="middle" fill="#f5a623" font-size="11" font-family="JetBrains Mono">4</text>
-        <circle cx="55" cy="65" r="13" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
-        <text x="55" y="70" text-anchor="middle" fill="#4ecb8d" font-size="11" font-family="JetBrains Mono">2</text>
-        <circle cx="165" cy="65" r="13" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
-        <text x="165" y="70" text-anchor="middle" fill="#4ecb8d" font-size="11" font-family="JetBrains Mono">6</text>
-        <circle cx="28" cy="115" r="13" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
-        <text x="28" y="120" text-anchor="middle" fill="#a78bfa" font-size="11" font-family="JetBrains Mono">1</text>
-        <circle cx="82" cy="115" r="13" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
-        <text x="82" y="120" text-anchor="middle" fill="#a78bfa" font-size="11" font-family="JetBrains Mono">3</text>
-        <circle cx="192" cy="115" r="13" fill="#10101a" stroke="#a78bfa" stroke-width="2"/>
-        <text x="192" y="120" text-anchor="middle" fill="#a78bfa" font-size="11" font-family="JetBrains Mono">7</text>
-        <text x="110" y="152" text-anchor="middle" fill="#f5a623" font-size="10" font-family="DM Sans">Diameter = 4 (path: 1→2→4→6→7)</text>
+        <line x1="110" y1="20" x2="55" y2="65" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="110" y1="20" x2="165" y2="65" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="55" y1="65" x2="28" y2="115" stroke="#bf7d10" stroke-width="2.5"/>
+        <line x1="55" y1="65" x2="82" y2="115" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="165" y1="65" x2="192" y2="115" stroke="#bf7d10" stroke-width="2.5"/>
+        <line x1="110" y1="20" x2="55" y2="65" stroke="#bf7d10" stroke-width="2.5"/>
+        <line x1="110" y1="20" x2="165" y2="65" stroke="#bf7d10" stroke-width="2.5"/>
+        <circle cx="110" cy="20" r="13" fill="#f1f1ee" stroke="#bf7d10" stroke-width="2"/>
+        <text x="110" y="25" text-anchor="middle" fill="#bf7d10" font-size="11" font-family="JetBrains Mono">4</text>
+        <circle cx="55" cy="65" r="13" fill="#f1f1ee" stroke="#1c815a" stroke-width="2"/>
+        <text x="55" y="70" text-anchor="middle" fill="#1c815a" font-size="11" font-family="JetBrains Mono">2</text>
+        <circle cx="165" cy="65" r="13" fill="#f1f1ee" stroke="#1c815a" stroke-width="2"/>
+        <text x="165" y="70" text-anchor="middle" fill="#1c815a" font-size="11" font-family="JetBrains Mono">6</text>
+        <circle cx="28" cy="115" r="13" fill="#f1f1ee" stroke="#6435bc" stroke-width="2"/>
+        <text x="28" y="120" text-anchor="middle" fill="#6435bc" font-size="11" font-family="JetBrains Mono">1</text>
+        <circle cx="82" cy="115" r="13" fill="#f1f1ee" stroke="#6435bc" stroke-width="2"/>
+        <text x="82" y="120" text-anchor="middle" fill="#6435bc" font-size="11" font-family="JetBrains Mono">3</text>
+        <circle cx="192" cy="115" r="13" fill="#f1f1ee" stroke="#6435bc" stroke-width="2"/>
+        <text x="192" y="120" text-anchor="middle" fill="#6435bc" font-size="11" font-family="JetBrains Mono">7</text>
+        <text x="110" y="152" text-anchor="middle" fill="#bf7d10" font-size="10" font-family="DM Sans">Diameter = 4 (path: 1→2→4→6→7)</text>
       </svg>
       <div class="card green" style="margin-top:.2em;">
         <h3>Post-order accumulation pattern</h3>
@@ -757,7 +758,7 @@ def level_order(root):
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 14 — Serialisation & Deserialisation
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">14</span>
     <h2>Serialisation &amp; Deserialisation</h2>
@@ -810,7 +811,7 @@ Serialised: "1 2 # # 3 4 # # 5 # #"</code></pre>
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 15 — Threaded Binary Trees
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">15</span>
     <h2>Threaded Binary Trees</h2>
@@ -850,7 +851,7 @@ Serialised: "1 2 # # 3 4 # # 5 # #"</code></pre>
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 16 — Expression Trees
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">16</span>
     <h2>Expression Trees</h2>
@@ -860,27 +861,27 @@ Serialised: "1 2 # # 3 4 # # 5 # #"</code></pre>
       <h3>Definition</h3>
       <p>A binary tree representing an arithmetic expression. <span class="g">Leaves</span> are operands, <span class="a">internal nodes</span> are operators.</p>
       <svg class="diagram" viewBox="0 0 200 160" width="200" height="160">
-        <line x1="100" y1="20" x2="50" y2="65" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="100" y1="20" x2="150" y2="65" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="50" y1="65" x2="25" y2="115" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="50" y1="65" x2="75" y2="115" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="150" y1="65" x2="125" y2="115" stroke="#2a2a3a" stroke-width="2"/>
-        <line x1="150" y1="65" x2="175" y2="115" stroke="#2a2a3a" stroke-width="2"/>
-        <circle cx="100" cy="20" r="14" fill="#10101a" stroke="#f5a623" stroke-width="2"/>
-        <text x="100" y="25" text-anchor="middle" fill="#f5a623" font-size="13" font-family="JetBrains Mono">*</text>
-        <circle cx="50" cy="65" r="14" fill="#10101a" stroke="#f5a623" stroke-width="2"/>
-        <text x="50" y="70" text-anchor="middle" fill="#f5a623" font-size="13" font-family="JetBrains Mono">+</text>
-        <circle cx="150" cy="65" r="14" fill="#10101a" stroke="#f5a623" stroke-width="2"/>
-        <text x="150" y="70" text-anchor="middle" fill="#f5a623" font-size="13" font-family="JetBrains Mono">-</text>
-        <circle cx="25" cy="115" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
-        <text x="25" y="120" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">3</text>
-        <circle cx="75" cy="115" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
-        <text x="75" y="120" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">4</text>
-        <circle cx="125" cy="115" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
-        <text x="125" y="120" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">5</text>
-        <circle cx="175" cy="115" r="14" fill="#10101a" stroke="#4ecb8d" stroke-width="2"/>
-        <text x="175" y="120" text-anchor="middle" fill="#4ecb8d" font-size="12" font-family="JetBrains Mono">2</text>
-        <text x="100" y="152" text-anchor="middle" fill="#8888a8" font-size="10" font-family="DM Sans">(3 + 4) * (5 - 2) = 21</text>
+        <line x1="100" y1="20" x2="50" y2="65" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="100" y1="20" x2="150" y2="65" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="50" y1="65" x2="25" y2="115" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="50" y1="65" x2="75" y2="115" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="150" y1="65" x2="125" y2="115" stroke="#d1d1cb" stroke-width="2"/>
+        <line x1="150" y1="65" x2="175" y2="115" stroke="#d1d1cb" stroke-width="2"/>
+        <circle cx="100" cy="20" r="14" fill="#f1f1ee" stroke="#bf7d10" stroke-width="2"/>
+        <text x="100" y="25" text-anchor="middle" fill="#bf7d10" font-size="13" font-family="JetBrains Mono">*</text>
+        <circle cx="50" cy="65" r="14" fill="#f1f1ee" stroke="#bf7d10" stroke-width="2"/>
+        <text x="50" y="70" text-anchor="middle" fill="#bf7d10" font-size="13" font-family="JetBrains Mono">+</text>
+        <circle cx="150" cy="65" r="14" fill="#f1f1ee" stroke="#bf7d10" stroke-width="2"/>
+        <text x="150" y="70" text-anchor="middle" fill="#bf7d10" font-size="13" font-family="JetBrains Mono">-</text>
+        <circle cx="25" cy="115" r="14" fill="#f1f1ee" stroke="#1c815a" stroke-width="2"/>
+        <text x="25" y="120" text-anchor="middle" fill="#1c815a" font-size="12" font-family="JetBrains Mono">3</text>
+        <circle cx="75" cy="115" r="14" fill="#f1f1ee" stroke="#1c815a" stroke-width="2"/>
+        <text x="75" y="120" text-anchor="middle" fill="#1c815a" font-size="12" font-family="JetBrains Mono">4</text>
+        <circle cx="125" cy="115" r="14" fill="#f1f1ee" stroke="#1c815a" stroke-width="2"/>
+        <text x="125" y="120" text-anchor="middle" fill="#1c815a" font-size="12" font-family="JetBrains Mono">5</text>
+        <circle cx="175" cy="115" r="14" fill="#f1f1ee" stroke="#1c815a" stroke-width="2"/>
+        <text x="175" y="120" text-anchor="middle" fill="#1c815a" font-size="12" font-family="JetBrains Mono">2</text>
+        <text x="100" y="152" text-anchor="middle" fill="#6a6a63" font-size="10" font-family="DM Sans">(3 + 4) * (5 - 2) = 21</text>
       </svg>
     </div>
     <div>
@@ -909,7 +910,7 @@ Serialised: "1 2 # # 3 4 # # 5 # #"</code></pre>
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 17 — Applications — File Systems
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">17</span>
     <h2>Applications — File Systems</h2>
@@ -953,7 +954,7 @@ Serialised: "1 2 # # 3 4 # # 5 # #"</code></pre>
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 18 — Applications — DOM & Decision Trees
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">18</span>
     <h2>Applications — DOM &amp; Decision Trees</h2>
@@ -1009,7 +1010,7 @@ Serialised: "1 2 # # 3 4 # # 5 # #"</code></pre>
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 19 — Complexity Cheat Sheet
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">19</span>
     <h2>Complexity Cheat Sheet</h2>
@@ -1047,7 +1048,7 @@ Serialised: "1 2 # # 3 4 # # 5 # #"</code></pre>
 <!-- ═══════════════════════════════════════════════════════════════
   SLIDE 20 — Summary & Further Reading
 ══════════════════════════════════════════════════════════════════ -->
-<section data-background-color="#0a0a0f">
+<section data-background-color="#fafaf8">
   <div class="slide-hdr">
     <span class="tag">20</span>
     <h2>Summary &amp; Further Reading</h2>
